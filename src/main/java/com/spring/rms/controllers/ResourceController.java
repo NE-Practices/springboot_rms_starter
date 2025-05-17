@@ -1,6 +1,7 @@
 package com.spring.rms.controllers;
 
 
+import com.spring.rms.models.ResourceBooking;
 import com.spring.rms.payload.request.CreateResourceDTO;
 import com.spring.rms.payload.request.UpdateResourceDTO;
 import com.spring.rms.payload.response.ApiResponse;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,5 +78,12 @@ public class ResourceController {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
         return ResponseEntity.ok(ApiResponse.success("Resources found",
                 resourceService.searchResources(searchKey, pageable)));
+    }
+
+    @PostMapping("/{id}/book")
+    @Operation(summary = "Book a resource", description = "Allows USER or ADMIN to book a resource", security = @SecurityRequirement(name = "bearerAuth"))
+    public ResponseEntity<ApiResponse> bookResource(@PathVariable UUID id, Authentication authentication) {
+        ResourceBooking booking = resourceService.bookResource(id, authentication.getName());
+        return ResponseEntity.ok(ApiResponse.success("Booking request submitted", booking));
     }
 }

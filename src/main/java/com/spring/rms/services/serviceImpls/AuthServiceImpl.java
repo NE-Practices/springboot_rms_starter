@@ -1,5 +1,6 @@
 package com.spring.rms.services.serviceImpls;
 
+import com.spring.rms.enums.ERole;
 import com.spring.rms.payload.request.RegisterDTO;
 import com.spring.rms.models.Role;
 import com.spring.rms.models.User;
@@ -30,7 +31,7 @@ public class AuthServiceImpl implements IAuthService {
     @Override
     public String login(LoginDTO loginDTO) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
         return jwtTokenProvider.generateToken(authentication);
     }
 
@@ -46,7 +47,7 @@ public class AuthServiceImpl implements IAuthService {
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
         user.setEmail(registerDTO.getEmail());
 
-        Role userRole = roleRepository.findByName("USER")
+        Role userRole = roleRepository.findByName(ERole.USER)
                 .orElseThrow(() -> new RuntimeException("USER role not found"));
         user.setRoles(new HashSet<>());
         user.getRoles().add(userRole);

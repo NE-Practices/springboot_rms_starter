@@ -1,5 +1,6 @@
 package com.spring.rms.models;
 
+import com.spring.rms.enums.ERole;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,6 +14,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true, nullable = false)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "name", nullable = false, unique = true)
+    private ERole name;
 }

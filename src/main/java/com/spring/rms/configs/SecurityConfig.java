@@ -47,6 +47,9 @@ public class SecurityConfig {
                         // Resource endpoints
                         .requestMatchers(HttpMethod.GET, "/api/v1/resources/**").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/api/v1/resources/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/bookings/*/approve").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/bookings/*/reject").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/bookings").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/swagger-ui/**",
                                 "/swagger-resources/*",
                                 "/v3/api-docs/**")

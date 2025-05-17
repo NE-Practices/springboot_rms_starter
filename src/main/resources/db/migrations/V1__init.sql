@@ -42,6 +42,15 @@ CREATE TABLE audit_logs (
                             details JSONB
 );
 
+CREATE TABLE password_reset_tokens (
+                                       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                                       user_id UUID NOT NULL,
+                                       token VARCHAR(6) NOT NULL,
+                                       expiry_date TIMESTAMP NOT NULL,
+                                       used BOOLEAN DEFAULT FALSE,
+                                       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 -- Insert roles
 INSERT INTO roles (id, name)
 VALUES

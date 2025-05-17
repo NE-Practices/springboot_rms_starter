@@ -1,5 +1,6 @@
 package com.spring.rms.payload.request;
 
+import com.spring.rms.enums.ECategory;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -11,5 +12,5 @@ public class UpdateResourceDTO {
     private String description;
 
     @NotBlank
-    private String category;
+    private ECategory category;
 }

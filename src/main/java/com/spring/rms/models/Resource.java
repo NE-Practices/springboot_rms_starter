@@ -1,5 +1,6 @@
 package com.spring.rms.models;
 
+import com.spring.rms.enums.ECategory;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,7 +21,8 @@ public class Resource {
     private String description;
 
     @Column(nullable = false)
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private ECategory category;
 
     private LocalDateTime createdAt;
 
